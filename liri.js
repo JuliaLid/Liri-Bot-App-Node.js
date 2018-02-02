@@ -1,8 +1,10 @@
-// require("dotenv").config();
-// var authKeys = require("./keys.js");
+require("dotenv").config();
+var authKeys = require("./keys.js");
+var Twitter = require('twitter');
+var Spotify = require('node-spotify-api');
 
-// var spotify = new Spotify(keys.spotify);
-// var client = new Twitter(keys.twitter);
+var spotify = new Spotify(authKeys.spotify);
+var client = new Twitter(authKeys.twitter);
 
 var request = require("request");
 var nodeArgs = process.argv;
@@ -19,10 +21,10 @@ switch (action) {
       movieRequest();
       break;
   
-    /* case "my-tweets":
+    case "my-tweets":
       twitterRequest();
       break;
-  
+  /*
     case "spotify-this-song":
       spotifyRequests();
       break;
@@ -76,3 +78,17 @@ function queryIMDB(){
     });
 }
 
+function twitterRequest(){
+    var params = {screen_name: 'Tweeting_Liri', count:20};
+    client.get("statuses/user_timeline",params, function(error, tweets, response) {
+        if(error) throw error;
+        tweets.forEach(function(element){
+            var myTweetsDate = element.created_at;
+            var myTweetsText = element.text;
+            console.log(myTweetsDate);
+            console.log(myTweetsText);
+            console.log("==========================");
+        })
+       
+     });
+}

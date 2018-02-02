@@ -2,7 +2,7 @@
   "name": "liri_bot_node_app",
   "version": "1.0.0",
   "description": "A bot that uses Twitter, Spotify, and OMDB APIs to search based on user's input.",
-  "main": "keys.js",
+  "main": "liri.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/JuliaLid/Liri-Bot-App-Node.js/issues"
   },
-  "homepage": "https://github.com/JuliaLid/Liri-Bot-App-Node.js#readme"
+  "homepage": "https://github.com/JuliaLid/Liri-Bot-App-Node.js#readme",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "node-spotify-api": "^1.0.7"
+  }
 }

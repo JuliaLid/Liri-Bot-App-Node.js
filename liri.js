@@ -1,3 +1,4 @@
+//Required npms and global vairables
 require("dotenv").config();
 var authKeys = require("./keys.js");
 var Twitter = require('twitter');
@@ -34,25 +35,32 @@ switch (action) {
     case "do-what-it-says":
       randomTextCommand();
       break; 
-  }
+}
 
   /* OMDB API */
 //===============================================
+//Function to pass a default argument and to string together a long movie name
 function movieRequest() {
    if (value==undefined){
        movieName = "Mr.Nobody"
+       console.log(nodeArgs);
        queryIMDB();    
    } else {
         for (var i=3; i<nodeArgs.length; i++){
             if(i>3 && i<nodeArgs.length){
                 movieName = movieName + "+"+nodeArgs[i];
+       console.log(nodeArgs);
+                
             }else {
                 movieName+=nodeArgs[i];
+       console.log(nodeArgs);
+                
             }
             queryIMDB();    
         }    
     }
 }
+//function to call OMDB result 
 function queryIMDB(){
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
     console.log(queryURL);
@@ -79,7 +87,8 @@ function queryIMDB(){
         }
     });
 }
-
+  /* Twitter API */
+//===============================================
 function twitterRequest(){
     var params = {screen_name: 'Tweeting_Liri', count:20};
     client.get("statuses/user_timeline",params, function(error, tweets, response) {
@@ -94,11 +103,12 @@ function twitterRequest(){
     });
 }
 
+  /* Spotify API */
+//===============================================
+//Function to pass a default argument and to string together a long song name
 function songSelection() {
     if (value==undefined){
-        // songName = "The&20Sign"
         songName = "The Sign";
-        var artist = "Ace of Base";
         spotifyRequest();    
     } else {
          for (var i=3; i<nodeArgs.length; i++){
@@ -112,7 +122,7 @@ function songSelection() {
          }    
      }
  }
-
+//Function to query Spotify API
 function spotifyRequest(){
    
    
@@ -136,5 +146,27 @@ function spotifyRequest(){
      
       });
 }
+  /* Random text command */
+//===============================================
+function randomTextCommand(){
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        if (err) {
+          return console.log(err);
+        }
+        var output = data.split(",");
+        songName=(output[1]);
+        spotifyRequest();
+    });
+}
 
+/* Append each command to a log*/
+//===============================================
+fs.appendFile("log.txt", "\nCommand:"+action + ", Argument: "+ value , function(err) {
 
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Content Added!");
+    }
+  
+  });

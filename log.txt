@@ -1,0 +1,12 @@
+do-what-it-saysspotify-this-song,undefinedspotify-this-song,undefined
+spotify-this-song,
+undefined
+spotify-this-song, undefined
+spotify-this-song, Lucy
+movie-this, titanic
+do-what-it-says, undefined
+Command:do-what-it-says, Argument: undefined
+Command:spotify-this-song, Argument: Lucy
+Command:movie-this, Argument: CAll
+Command:movie-this, Argument: Black
+Command:movie-this, Argument: Call

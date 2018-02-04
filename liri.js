@@ -13,11 +13,10 @@ var nodeArgs = process.argv;
 
 var action = nodeArgs[2];
 var value = nodeArgs[3];
-var movieName = "";
-var songName = "";
+var input = "";
 
 
-/* Main switch function that calls the appropriate function depending on the main argument */
+/* Main switch function that calls the appropriate function depending on the provided comman */
 
 switch (action) {
     case "movie-this":
@@ -37,33 +36,31 @@ switch (action) {
       break; 
 }
 
+/*Utility function to determine the name of a song or movie provided as arguments  */ 
+function convertInput(){
+    for (var i=3; i<nodeArgs.length; i++){
+        input = input + "+"+nodeArgs[i];
+    } 
+        return input; 
+}
+
   /* OMDB API */
 //===============================================
-//Function to pass a default argument and to string together a long movie name
+//Function to pass a default argument or call utility funciton for a long movie name
 function movieRequest() {
    if (value==undefined){
-       movieName = "Mr.Nobody"
-       console.log(nodeArgs);
+       input = "Mr.Nobody"
        queryIMDB();    
    } else {
-        for (var i=3; i<nodeArgs.length; i++){
-            if(i>3 && i<nodeArgs.length){
-                movieName = movieName + "+"+nodeArgs[i];
-       console.log(nodeArgs);
-                
-            }else {
-                movieName+=nodeArgs[i];
-       console.log(nodeArgs);
-                
-            }
-            queryIMDB();    
-        }    
+        convertInput();
+        queryIMDB();
     }
 }
+
 //function to call OMDB result 
 function queryIMDB(){
-    var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
-    console.log(queryURL);
+    var queryURL = "http://www.omdbapi.com/?t=" + input + "&y=&plot=short&apikey=trilogy";
+    // console.log(queryURL);
 
     request(queryURL, function(error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -105,28 +102,21 @@ function twitterRequest(){
 
   /* Spotify API */
 //===============================================
-//Function to pass a default argument and to string together a long song name
+//Function to pass a default argument and to all utility funciton for a long song name
 function songSelection() {
     if (value==undefined){
-        songName = "The Sign";
+        input = "The Sign";
         spotifyRequest();    
     } else {
-         for (var i=3; i<nodeArgs.length; i++){
-             if(i>3 && i<nodeArgs.length){
-                 songName = songName + "%20"+nodeArgs[i];
-                 console.log(songName);
-             }else {
-                 songName+=nodeArgs[i];
-             }
-             spotifyRequest();    
-         }    
-     }
+        convertInput();
+        spotifyRequest();
+    }
  }
 //Function to query Spotify API
 function spotifyRequest(){
    
    
-    spotify.search({ type: 'track', query: songName, limit:1}, function(err, data) {
+    spotify.search({ type: 'track', query: input, limit:1}, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
         } else {
@@ -154,19 +144,18 @@ function randomTextCommand(){
           return console.log(err);
         }
         var output = data.split(",");
-        songName=(output[1]);
+        input=(output[1]);
         spotifyRequest();
     });
 }
 
 /* Append each command to a log*/
 //===============================================
-fs.appendFile("log.txt", "\nCommand:"+action + ", Argument: "+ value , function(err) {
+fs.appendFile("log.txt", "\nCommand:"+action + ", Argument: "+ input , function(err) {
 
     if (err) {
       console.log(err);
     } else {
       console.log("Content Added!");
     }
-  
-  });
+});

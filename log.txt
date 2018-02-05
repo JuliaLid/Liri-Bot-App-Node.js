@@ -73,3 +73,8 @@ Command:do-what-it-says, Argument:
 Command:do-what-it-says, Argument: undefined
 Command:movie-this, Argument: Basketball
 Command:movie-this, Argument: +Basketball+diaries
+Command:movie-this, Argument: +Basketball+diaries
+Command:do-what-it-says, Argument: 
+Command:movie-this, Argument: Mr.Nobody
+Command:spotify-this-song, Argument: +I+want+it+that+way
+Command:my-tweets, Argument: 

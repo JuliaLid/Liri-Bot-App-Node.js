@@ -23,6 +23,8 @@
   "homepage": "https://github.com/JuliaLid/Liri-Bot-App-Node.js#readme",
   "dependencies": {
     "dotenv": "^5.0.0",
-    "node-spotify-api": "^1.0.7"
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.83.0",
+    "twitter": "^1.7.1"
   }
 }
